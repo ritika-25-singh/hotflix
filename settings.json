@@ -4,11 +4,16 @@
       "clearColor": "0x00000000",
       "useImageWorker": true
     },
+    "keys": {
+      "77": "Movie"
+    },
     "debug": false
   },
   "platformSettings": {
     "path": "./static",
     "log": true,
-    "showVersion": true
+    "showVersion": true,
+    "backtracking": true
+
   }
 }
