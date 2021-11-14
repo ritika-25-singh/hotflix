@@ -161,13 +161,13 @@ class ImageListItem extends lng.Component {
     }
 
     _focus() {
-    this.patch({ smooth: { alpha: 1, scale: 1.2 ,zIndex:15}, 
+    this.patch({ smooth: { alpha: 1, scale: 1.2 }, 
         RoundRectangle: {x: 25, y: 130, texture: lng.Tools.getRoundRect(151, 201, 4, 3, 0xffdb7093, false, 0xffdb7093)}
     });
     }
 
     _unfocus() {
-        this.patch({ smooth: { alpha: 0.8, scale: 1 ,zIndex:5}, RoundRectangle: undefined  })
+        this.patch({ smooth: { alpha: 0.8, scale: 1 }, RoundRectangle: undefined  })
     }
    _handleEnter() {
        const params = {

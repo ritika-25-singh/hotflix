@@ -1,6 +1,6 @@
 import { Lightning, Utils, Router } from "@lightningjs/sdk";
 
-export default class tvShows extends Lightning.Component {
+export default class LandingPage extends Lightning.Component {
     static _template() {
         return {
             Background: {
@@ -19,11 +19,17 @@ export default class tvShows extends Lightning.Component {
     }
 
     _init() {
-        const imgList = ['images/Friends.png', 'images/Never.png', 'images/Friends.png', 'images/Never.png', 'images/Hero.png', 'images/Friends.png', 'images/Never.png']
+        this.imgList = ['images/Hero.png', 'images/After.png', 'images/Hero.png', 'images/After.png', 'images/Hero.png', 'images/After.png', 'images/Hero.png', 'images/After.png']
         this.tag('List').items = ['Movie', 'Shows', 'Live', 'Replay'].map((i) => ({ label: i }));
-        this.tag('Metadata').items = imgList.map((i) => ({ img: i, Name: (i.split("/")[1]) }));
+        this.tag('Metadata').items = this.imgList.map((i) => ({ img: i, Name: (i.split("/")[1]) }));
         this._setState('List');
-        this.index = 0;
+        this.index = 0
+    }
+    setNewImage(){
+        this.imgList = ['images/Friends.png', 'images/Never.png', 'images/Friends.png', 'images/Never.png', 'images/Hero.png', 'images/Friends.png', 'images/Never.png']
+        this.tag('Metadata').items = this.imgList.map((i) => ({ img: i, Name: (i.split("/")[1]) }));
+        
+        // this._init();
     }
 
     static _states() {
@@ -34,6 +40,10 @@ export default class tvShows extends Lightning.Component {
                 }
                 _handleDown() {
                     this._setState('Metadata');
+                }
+                _handleRight() {
+                    this.tag('List').focusChange();
+                    this.setNewImage();
                 }
             },
             class Metadata extends this {
@@ -53,7 +63,7 @@ class ExampleList extends lng.Component {
         return {}
     }
     _init() {
-        this.index = 1
+        this.index = 0
     }
     set items(items) {
         this.children = items.map((item, index) => {
@@ -74,7 +84,7 @@ class ExampleList extends lng.Component {
         }
     }
 
-    _handleRight() {
+    focusChange() {
         // we don't know exactly how many items the list can have
         // so we test it based on this component's child list
         if (this.index < this.children.length - 1) {
@@ -97,7 +107,8 @@ class ExampleListItem extends lng.Component {
 
     _focus() {
         this.tag('Label').color = 0xffdb7093
-        this.patch({ smooth: { alpha: 1, scale: 1.2 }, })
+        this.patch({ smooth: { alpha: 1, scale: 1.2 }, });
+
     }
 
     _unfocus() {
@@ -105,10 +116,6 @@ class ExampleListItem extends lng.Component {
         this.patch({ smooth: { alpha: 0.8, scale: 1 } })
     }
     _handleEnter() {
-        // const params = {
-        //     Image: this.item.img,
-        //     Name: this.item.Name
-        // }
         Router.navigate('tvShows');
     }
 }
@@ -161,20 +168,20 @@ class ImageListItem extends lng.Component {
     }
 
     _focus() {
-    this.patch({ smooth: { alpha: 1, scale: 1.2 ,zIndex:15}, 
+    this.patch({ smooth: { alpha: 1, scale: 1.2 }, 
         RoundRectangle: {x: 25, y: 130, texture: lng.Tools.getRoundRect(151, 201, 4, 3, 0xffdb7093, false, 0xffdb7093)}
     });
     }
 
     _unfocus() {
-        this.patch({ smooth: { alpha: 0.8, scale: 1 ,zIndex:5}, RoundRectangle: undefined  })
+        this.patch({ smooth: { alpha: 0.8, scale: 1 }, RoundRectangle: undefined  })
     }
    _handleEnter() {
        const params = {
            Image: this.item.img,
            Name: this.item.Name
        }
-       Router.navigate('detailsPage', params);
+    //    Router.navigate('detailsPage', params);
    }
    pageTransition() {
     return 'crossFade'
